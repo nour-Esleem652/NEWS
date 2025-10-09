@@ -1,0 +1,41 @@
+        <?php  
+            if($type=="active"){
+
+            }if ($type=="deleted") {?>
+                <a href="#"></a>
+        <?php
+            } else {?>
+                <a href="deletedNews.php">Deleted News</a>
+            <?php
+            } 
+            ?>
+
+
+
+
+            <select name="user_id">
+            <?php
+            $result = $conn->query("SELECT id, username FROM users");
+            while($row = $result->fetch_assoc()){
+                echo "<option value='{$row['id']}'>{$row['username']}</option>";
+            }
+            ?>
+            </select>
+
+
+
+
+                if($result->num_rows > 0){  
+            $data = $result->fetch_assoc();
+            if(password_verify($password,$data["password"])){
+                  // من خلالها نصل الى صفحة الداش بورد
+                $_SESSION["authUser"]=$data;
+                header("Location:dashboardUi.php");
+                    echo "login done";
+            }else{
+                echo "login faile";      
+            }
+            
+        }else{
+            echo "login faile";
+        } 
