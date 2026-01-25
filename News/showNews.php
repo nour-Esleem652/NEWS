@@ -2,9 +2,9 @@
 require_once 'config.php';
 // checkAuth();
 
+
 $connetion = getDBConnection();
 
-// حذف خبر (نقل للمحذوفات)
 if (isset($_GET['delete_id'])) {
     $delete_id = intval($_GET['delete_id']);
     
@@ -22,7 +22,6 @@ if (isset($_GET['delete_id'])) {
     exit;
 }
 
-// جلب الأخبار النشطة
 $sql = "SELECT news.*, categories.category_name, users.name as user_name 
         FROM news 
         LEFT JOIN categories ON news.category_id = categories.id 
@@ -160,8 +159,8 @@ unset($_SESSION['success_msg'], $_SESSION['error_msg']);
                         <td><?php echo date('Y-m-d', strtotime($row['created_at'])); ?></td>
                         <td>
                             <a href="?delete_id=<?php echo $row['id']; ?>" 
-                               class="delete-btn" 
-                               onclick="return confirm('هل تريد نقل هذا الخبر للمحذوفات؟')">
+                                class="delete-btn" 
+                                onclick="return confirm('هل تريد نقل هذا الخبر للمحذوفات؟')">
                                 حذف
                             </a>
                         </td>

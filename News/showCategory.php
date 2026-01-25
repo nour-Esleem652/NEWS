@@ -1,26 +1,26 @@
 <?php
 require_once 'config.php';
-
+// checkAuth();
 
 $connetion = getDBConnection();
 
 // حذف فئة بشكل آمن
 if (isset($_GET['delete_id'])) {
     $delete_id = intval($_GET['delete_id']);
-    
+
     // التحقق من عدم وجود أخبار مرتبطة بهذه الفئة
     $check_stmt = $connetion->prepare("SELECT COUNT(*) as count FROM news WHERE category_id = ?");
     $check_stmt->bind_param("i", $delete_id);
     $check_stmt->execute();
     $check_result = $check_stmt->get_result();
     $check_data = $check_result->fetch_assoc();
-    
+
     if ($check_data['count'] > 0) {
         $_SESSION['error_msg'] = "لا يمكن حذف هذه الفئة لأن هناك أخبار مرتبطة بها!";
     } else {
         $stmt = $connetion->prepare("DELETE FROM categories WHERE id = ?");
         $stmt->bind_param("i", $delete_id);
-        
+
         if ($stmt->execute()) {
             $_SESSION['success_msg'] = "تم حذف الفئة بنجاح!";
         } else {
@@ -28,19 +28,20 @@ if (isset($_GET['delete_id'])) {
         }
         $stmt->close();
     }
+
     $check_stmt->close();
-    
     header("Location: showCategory.php");
     exit;
 }
 
 // جلب جميع الفئات
-$result = $connetion->query("SELECT * FROM categories ORDER BY id DESC");
+$result = $connetion->query("SELECT id, category_name FROM categories ORDER BY id DESC");
 
 $success = $_SESSION['success_msg'] ?? '';
 $error = $_SESSION['error_msg'] ?? '';
 unset($_SESSION['success_msg'], $_SESSION['error_msg']);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
@@ -152,9 +153,10 @@ unset($_SESSION['success_msg'], $_SESSION['error_msg']);
                         <td><?php echo $count++; ?></td>
                         <td><?php echo sanitizeInput($row['category_name']); ?></td>
                         <td>
-                            <a href="?delete_id=<?php echo $row['id']; ?>" 
-                               class="delete-btn" 
-                               onclick="return confirm('هل أنت متأكد من حذف هذه الفئة؟')">
+                            <a href="showCategory.php?delete_id=<?php echo $row['id']; ?>" 
+
+                                class="delete-btn" 
+                                onclick="return confirm('هل أنت متأكد من حذف هذه الفئة؟')">
                                 حذف
                             </a>
                         </td>

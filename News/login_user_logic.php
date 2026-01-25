@@ -6,7 +6,8 @@ $connetion = getDBConnection();
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["login"])) {
     $name = trim($_POST["name"]);
     $email = trim($_POST["email"]);
-    $password = $_POST['password'];
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    
     
     // التحقق من المدخلات
     $errors = [];
@@ -37,10 +38,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["login"])) {
         }
         $check_stmt->close();
         
-        // تشفير كلمة المرور
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        // $hashed_password = password_hash($password, PASSWORD_DEFAULT);
         
-        // إدراج المستخدم الجديد
         $stmt = $connetion->prepare("INSERT INTO users(name, email, password) VALUES(?, ?, ?)");
         $stmt->bind_param("sss", $name, $email, $hashed_password);
         
@@ -58,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["login"])) {
         $_SESSION['register_data'] = $_POST;
     }
     
-    header("Location: login_ui.php");
+    header("Location:login_ui.php");
     exit;
 }
 

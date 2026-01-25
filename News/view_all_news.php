@@ -6,7 +6,6 @@ $sql = "SELECT news.id, news.title, news.content, news.created_at, categories.na
         JOIN categories ON news.category_id = categories.id
         JOIN users ON news.user_id = users.id
         WHERE news.status = 'active'";
-         // لو بتستخدمي حذف منطقي
 
 $result = mysqli_query($connection, $sql);
 ?>
@@ -40,6 +39,6 @@ $result = mysqli_query($connection, $sql);
     </td>
     </tr>
     <?php
- } 
+} 
     ?>
 </table>

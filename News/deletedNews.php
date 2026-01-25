@@ -1,6 +1,6 @@
 <?php
 require_once 'config.php';
-checkAuth();
+// checkAuth();
 
 $connetion = getDBConnection();
 
@@ -211,8 +211,8 @@ unset($_SESSION['success_msg'], $_SESSION['error_msg']);
                         <td>
                             <?php if (!empty($row['image']) && file_exists('uploads/' . $row['image'])): ?>
                                 <img src="uploads/<?php echo sanitizeInput($row['image']); ?>" 
-                                     class="news-image" 
-                                     alt="صورة الخبر">
+                                        class="news-image" 
+                                        alt="صورة الخبر">
                             <?php else: ?>
                                 لا توجد صورة
                             <?php endif; ?>
@@ -223,13 +223,13 @@ unset($_SESSION['success_msg'], $_SESSION['error_msg']);
                         <td><?php echo date('Y-m-d H:i', strtotime($row['updated_at'])); ?></td>
                         <td>
                             <a href="?restore_id=<?php echo $row['id']; ?>" 
-                               class="restore-btn" 
-                               onclick="return confirm('هل تريد استعادة هذا الخبر؟')">
+                                class="restore-btn" 
+                                onclick="return confirm('هل تريد استعادة هذا الخبر؟')">
                                 ↩️ استعادة
                             </a>
                             <a href="?permanent_delete=<?php echo $row['id']; ?>" 
-                               class="delete-btn" 
-                               onclick="return confirm('⚠️ تحذير!\n\nسيتم حذف الخبر نهائياً ولن يمكن استعادته.\n\nهل أنت متأكد؟')">
+                                class="delete-btn" 
+                                onclick="return confirm('⚠️ تحذير!\n\nسيتم حذف الخبر نهائياً ولن يمكن استعادته.\n\nهل أنت متأكد؟')">
                                 ❌ حذف نهائي
                             </a>
                         </td>

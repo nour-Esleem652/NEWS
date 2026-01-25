@@ -1,10 +1,17 @@
 <?php
+// require_once 'config.php';
+// checkAuth();
+
+
 require_once 'config.php';
+$error = $_SESSION['error_msg'] ?? '';
+unset($_SESSION['error_msg']);
 
 
-$connetion = getDBConnection();
-$error = '';
-$success = '';
+
+// $connetion = getDBConnection();
+// $error = '';
+// $success = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["save_category"])) {
     // التحقق من CSRF Token
@@ -135,7 +142,7 @@ $csrf_token = generateCSRFToken();
             <div class="alert alert-error"><?php echo sanitizeInput($error); ?></div>
         <?php endif; ?>
         
-        <form method="post" action="">
+        <form action="Add_category_logic.php" method="POST">
             <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
             
             <label>اسم الفئة:</label>
@@ -148,4 +155,3 @@ $csrf_token = generateCSRFToken();
 </body>
 </html>
 
-<?php $connetion->close(); ?>

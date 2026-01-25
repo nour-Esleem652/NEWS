@@ -154,29 +154,6 @@ $connetion->close();
             <p>لوحة التحكم - إدارة الأخبار</p>
         </div>
         
-        <div class="stats">
-            <div class="stat-card">
-                <div class="icon">📁</div>
-                <div class="number"><?php echo $stats['categories']; ?></div>
-                <div class="label">فئة</div>
-            </div>
-            <div class="stat-card">
-                <div class="icon">📰</div>
-                <div class="number"><?php echo $stats['active_news']; ?></div>
-                <div class="label">خبر نشط</div>
-            </div>
-            <div class="stat-card">
-                <div class="icon">🗑️</div>
-                <div class="number"><?php echo $stats['deleted_news']; ?></div>
-                <div class="label">خبر محذوف</div>
-            </div>
-            <div class="stat-card">
-                <div class="icon">👥</div>
-                <div class="number"><?php echo $stats['users']; ?></div>
-                <div class="label">مستخدم</div>
-            </div>
-        </div>
-        
         <div class="menu">
             <a href="Add_category.php" class="menu-item">
                 <div class="icon">➕</div>
@@ -218,7 +195,6 @@ $connetion->close();
 
 
 <?php
-// session_start();
 
 
 $_SESSION = array();
@@ -230,9 +206,5 @@ if (ini_get("session.use_cookies")) {
 }
 
 
-session_destroy();
 
-
-
-exit;
 ?>

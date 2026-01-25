@@ -1,13 +1,11 @@
 <?php
-session_start();
+require_once 'config.php';
+// checkAuth();
 
-// التحقق من تسجيل الدخول
-// if(!isset($_SESSION["authUser"])){
-//     header("Location:login_ui.php");
-//     exit;
-// }
+$connetion = getDBConnection();
+$csrf_token = generateCSRFToken();
 
-include "connetionOnDatabase.php";
+
 ?>
 
 <!DOCTYPE html>
@@ -92,13 +90,14 @@ include "connetionOnDatabase.php";
     <div class="container">
         <h2>إضافة خبر جديد</h2>
         
-        <form action="createPage_news_logic.php" method="POST" enctype="multipart/form-data">   
-            
+        <form action="creatPage_news_logic.php" method="POST" enctype="multipart/form-data">   
+            <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
+
             <label>عنوان الخبر:</label>
             <input type="text" name="title" placeholder="أدخل عنوان الخبر" required>
             
             <label>تفاصيل الخبر:</label>
-            <textarea name="details" placeholder="أدخل تفاصيل الخبر" required></textarea>
+            <textarea name="content" placeholder="أدخل تفاصيل الخبر" required></textarea>
             
             <label>الفئة:</label>
             <select name="category_id" required>
@@ -135,3 +134,4 @@ include "connetionOnDatabase.php";
     </div>
 </body>
 </html>
+
