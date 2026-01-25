@@ -68,8 +68,9 @@ define('ALLOWED_EXTENSIONS', ['jpg', 'jpeg', 'png', 'gif']);
 if (session_status() === PHP_SESSION_NONE) {
     session_start([
         'cookie_httponly' => true,
-        'cookie_secure' => false,
-        'cookie_samesite' => 'Strict'
+        'cookie_secure' => isset($_SERVER['HTTPS']),
+        'cookie_samesite' => 'Lax'
+        // 'cookie_samesite' => 'Strict'
     ]);
 }
 
