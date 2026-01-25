@@ -2,10 +2,10 @@ FROM php:8.2-apache
 
 RUN docker-php-ext-install mysqli pdo pdo_mysql
 
-# انسخي محتوى مجلد News إلى مجلد الويب مباشرة
+# انسخي ملفات مشروعك اللي داخل مجلد News إلى مسار Apache
 COPY ./News/ /var/www/html/
 
-# (اختياري لكن ممتاز) صلاحيات
-RUN chown -R www-data:www-data /var/www/html
+# (اختياري) لو عندك .htaccess أو routing
+RUN a2enmod rewrite
 
 EXPOSE 80
